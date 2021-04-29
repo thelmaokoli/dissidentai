@@ -1,0 +1,220 @@
+Setting Up Composer
+cd ../.. to c:
+cd .\xampp\htdocs
+composer create-project laravel/laravel projectname
+localhost/projectname (security)
+localhost/public (frontend)
+go to xampp apache conf extra change vhosts conf file
+add this to fix secuirty issue 
+
+<VirtualHost *:80>
+    DocumentRoot "C:/xampp/htdocs/projectname"
+    ServerName localhost
+</VirtualHost>
+<VirtualHost *:80>
+    ServerName projectname.me
+    DocumentRoot "C:/xampp/htdocs/projectname/public"
+</VirtualHost>
+
+and this:
+run notepad as administrator
+open c windows system32 drier etc view all files open hosts file
+add to bottom:
+
+127.0.0.1 localhost
+127.0.0.1 projectname.me
+
+open xampp panel - apache - stop and then restart
+
+// projectname.me/phpsandbox/website3
+
+
+------ artisan
+
+php artisan make:controller PagesController 
+check in app http controllers or created page
+php artisan make:controller PostsController --resource
+php artisan make:model Post -m 
+// makes model and Post.php in models (and table?)
+// -m creates CreatePostsTable in databases (migrations)
+// add more to schema (after id)
+$table->string('title');
+$table->mediumText('body');
+// look at migrations -> createuserstable
+
+in PagesController:
+
+
+class PagesController extends Controller
+{
+    public function index(){
+       // return 'INDEX';
+       return view('pages.index');
+    }
+}
+
+in web.php: 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\PagesController;
+
+.env appname projectname
+in index.blade.php:
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{{config('app.name', 'DissidentAI')}}</title>
+    </head>
+   
+</html>
+
+The folder structure is different in Laravel 7.x; So to include CSS you first need to install node js and run  
+1) composer require laravel/ui 
+2) npm install
+3) npm run dev
+This will create CSS assets in public folder.
+npm run watch or npm run dev to show css changes
+
+bootstrap:
+ShiksTV
+ShiksTV
+1 year ago
+for anyone using laravel 6 and is having problems with bootstrap do this after 9:48.
+
+1. Make Sure in /resources/js/app.js there is a code : require('./bootstrap');
+2. run in your terminal -> composer require laravel/ui
+3 run in your terminal -> php artisan ui bootstrap
+4. terminal -> npm install 
+5. terminal -> npm run dev
+
+D:\wamp\www\lsapp\lsapp\public\css\app.css should now be present and you could now use bootstrap 
+
+
+
+in .env file
+update database info 
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3307 (**NOTE 3307)
+DB_DATABASE=projectdbname
+DB_USERNAME=root
+DB_PASSWORD=yourpass
+
+under providers - AppServiceProvider 
+use Illuminate\Support\Facades\Schema;
+in class:
+public function boot(){
+    Schema::defaultStringLength(191);
+}
+
+RUN php artisan migrate
+// all the migrations now appear under database, and a migrations tracker
+
+// in bash to use eloquent
+php artisan tinker
+App\Post::count()
+=> 0 (means 0 posts)
+$post = new App\Models\Post();
+=> App\Models\Post {679}
+// created a new instance 
+$post->title = ' post One'; ENTER
+$post->body = 'this is the post Body';
+$post->save();
+quit
+
+
+
+// resource functions/ methods in PostsController
+// created by --resource
+    index
+    create_function
+    store
+    edit 
+    update
+    show
+    destroy
+// shortcut to turn these into routes
+
+in terminal:
+php artisan route:list
+// => shows all routes you have in the application
+go to routes folder
+- web.php:
+use App\Http\Controllers\PostsController;
+Route::resources(['posts'=>PostsController::class]);
+// ON SAVE, THIS WILL CREATE ROUTES FOR ALL 
+// THE RESOURCE FUNCTIONS
+// this sends appname/posts to go to index function of resource PostContoller
+php artisan route:list (to see)
+
+// in models post.php class
+---> // table name
+// if you create a model called post, by default the table will 
+// be called posts
+protected $table = 'Postings';
+// if you wanted to change it
+public $primaryKey = 'id'; // default
+public $primaryKey = 'itemid'; // can change default
+// do you want timestamps?
+public $timestamps = true;
+
+create in views folder posts
+create file index.blade.php 
+
+// in PostsController
+use App\Models\Post;
+   public function index()
+    {
+        $posts = Post::all();
+        // this will fetch all the data in this model (array / json form)
+        return view('posts.index')->with('posts', $posts);
+    }
+
+
+@extends('layouts.app')
+@section('content')
+    <h1>Posts</h1>
+    @if(count($posts) > 1)
+    @foreach ($posts as $post)
+        <div class="">
+            <h3>
+                <a href="/posts/{{$post->id}}">{{$post->title}}
+                <small>Dropped {{$post->created_at}}</small>
+            </h3>
+        </div>
+    @endforeach
+    {{$posts->links()}}
+    @else
+        <p>No Posts Yet</p>
+    @endif
+@endsection
+
+//     {{$posts->links()}} pagination aid automativ previous next buttons
+
+// in views - navbar - add a link to the blog
+<li>
+            <a  href="/posts">Stories</a>
+          </li>
+
+// go to PostContoller.php show function 
+// already set to get id
+public function show($id){
+     $post = Post::find($id);
+        return view('posts.show')->with('post', $post);
+    }
+
+
+// https://laravelcollective.com/docs/6.x/html#opening-a-form
+// composer require laravelcollective/html
+// open a form, etc 
+
+composer require unisharp/laravel-ckeditor DID NOT WORK
+https://cdn.ckeditor.com/
+https://ckeditor.com/ckeditor-4/download/?null-addons=
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+https://artisansweb.net/install-use-ckeditor-laravel/
+....
+php artisan storage:link
