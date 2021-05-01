@@ -7,6 +7,8 @@ localhost/public (frontend)
 go to xampp apache conf extra change vhosts conf file
 add this to fix secuirty issue 
 
+// to add etra users - go to users migration an add extra steps, then run migration
+
 <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs/projectname"
     ServerName localhost
@@ -215,6 +217,149 @@ composer require unisharp/laravel-ckeditor DID NOT WORK
 https://cdn.ckeditor.com/
 https://ckeditor.com/ckeditor-4/download/?null-addons=
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+CKEDITOR.replace( 'article-ckeditor' );
+</script>
 https://artisansweb.net/install-use-ckeditor-laravel/
 ....
 php artisan storage:link
+
+
+Enabaling Authentication
+php artian ui:auth 
+// makes a login system that just works right away
+// it will prompt you to replace the app.blade.php// save the contents in
+// this file to paste back in later 
+// ALSO SAVE APP.BLADE.PHP (re-add includes - messages, nabar etc)
+// also creates home controller 
+
+
+
+// <!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{asset('css/app.css')}}" />
+        <title>{{config('app.name', 'DissidentAI')}}</title>
+    </head>
+   <body>
+       @include('inc.navbar')
+       <div class="container">
+           @include('inc.messages')
+@yield('content')
+   </div>
+   <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+   <script>
+    CKEDITOR.replace( 'article-ckeditor');
+    </script>
+</body>
+</html>
+
+
+// inserting the user id as a field when you create a post
+php artisan make:migration ad_user_id_to_posts
+// created migration
+hen you run the migration it will add this  public function up()
+    {
+        // Schema::table('posts', function (Blueprint $table) {
+            Schema::table('posts', function ($table) {
+            $table->integer('user_id');
+        });
+        }
+        
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
+    }
+}
+/// PHP ARTISAN MIGRATE 
+
+// add to store function  $post->user_id = auth()->user()->id;
+
+
+// notes on implementing authentication (example - guests should not be able to create posts)
+ // from the homecontroller - this function blocks everything in the dashboard 
+ // if the user isn't authenticated 
+   public function __construct()
+    {
+        $this->middleware('auth');
+    }
+// add to PostContoller too:    // trying to add an entry now redirects to login
+// add with exceptions
+   public function __construct()
+   {
+       $this->middleware('auth'. ['except' => ['index', 'show']]);
+   }
+   // adding auth to sections of views:
+      @if(!Auth::guest())
+    <a href="/posts/{{$post->id}}/edit">Edit</a>
+
+    {!!Form::open(['action' => ['App\Http\Controllers\PostsController@destroy', $post->id], 'method' => 'POST'])!!}
+    <?php // just like with update - the fake POST becomes a delete (see route list for limitations)?>
+    {{Form::hidden('_method', 'DELETE')}}
+    {{Form::submit('Delete', ['class' => 'delete-btn'])}}
+    {!!Form::close()!!}
+    @endif 
+
+    UPDATE:
+    Now in laravel 5.6 you can easily check weather the user authenticated using Authentication Directives in your blades.  
+@auth <!-- your blade codes --> @endauth (check authenticated )
+@guest <!-- your blade codes --> @endguest (check not authenticated )
+
+in PostsController
+   public function edit($id)
+    {
+        $post = Post::find($id);
+
+        // check for correct user:
+            if(auth()->user()->id !==$post->user_id){
+                return redirect('/posts')->with('error', 'unauthorized page');
+            }
+
+        return view('posts.edit')->with('post', $post);
+    
+    }
+
+
+Why VIEW AUTH ISN'T ENOUGH: (for update routes)
+PostsController@update will fire when there's a PUT request to
+ /posts/x/update and anybody that's logged in can inject a form 
+ into the index. They may not have access to the edit view but 
+ an attacker (which needs to be logged in that's for sure) 
+ can emulate it.
+ SOLUTION: PostsContoller@update should also have a $post->user_id check
+
+    $post = Post::find($id);
+            // check for correct user:
+                if(auth()->user()->id !==$post->user_id){
+                    return redirect('/posts')->with('error', 'unauthorized page');
+                } else {   
+            $post->title = $request->input('title');
+            $post->body = $request->input('body');
+            $post->save();
+            return redirect('/posts')->with('success', 'Entry Updated');
+                }
+
+
+// adding image (from lessoons)
+php artisan make:migration add_cover_image_to_posts
+// add functions to controller then run
+php artisan migrate 
+// update postcontroller 
+$this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'cover_image' => 'image|nullable|max1999'
+        ]);
+
+// see full code
+// then do php artisan storage:link 
+// doubles the storage file so whatever is stored is also used on the website

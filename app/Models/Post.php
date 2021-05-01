@@ -19,4 +19,10 @@ public $primaryKey = 'itemid'; // can change default
 // do you want timestamps?
 */
 public $timestamps = true;
+
+// setting up model relationships - assign post ownership
+// see user.php for pair line
+public function user(){
+    return $this->belongsTo('App\Models\User');
+}
 }
