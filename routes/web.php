@@ -23,6 +23,12 @@ Route::get('/about', [PagesController::class, 'about']);
 
 Route::get('/services', [PagesController::class, 'services']);
 
+
+Route::get('/news', [PagesController::class, 'news' ]);
+Route::get('/blogs', [PagesController::class, 'blogs' ]);
+Route::get('/communities', [PagesController::class, 'communities' ]);
+Route::get('/contact', [PagesController::class, 'contact']);
+
 Route::resources(['posts'=>PostsController::class]);
 // this sends appname/posts to go to index function of resource PostContoller
 

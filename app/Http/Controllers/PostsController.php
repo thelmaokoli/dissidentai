@@ -97,7 +97,7 @@ class PostsController extends Controller
                 // filename to store
                 $filenameToStore= $filename.'_'.time().'.'.$extension;
                 // timestamp - helps with UNIQUE file names
-                $path = $request->file('cover_image')->storeAs('public/cover_images', $filenameToStore);
+                $path = $request->file('cover_image')->storeAs('public/images/cover_images', $filenameToStore);
                 // note that this function also creates the folder if it doesn't already exists
             } else {
                 $filenameToStore = 'noimage.jpg';
@@ -173,7 +173,7 @@ class PostsController extends Controller
             // filename to store
             $filenameToStore= $filename.'_'.time().'.'.$extension;
             // timestamp - helps with UNIQUE file names
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $filenameToStore);
+            $path = $request->file('cover_image')->storeAs('public/images/cover_images', $filenameToStore);
             // note that this function also creates the folder if it doesn't already exists
         } 
 
@@ -199,7 +199,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $post = Post::find($id);
 

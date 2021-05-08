@@ -1,17 +1,25 @@
 @extends('layouts.app')
 @section('content')
-<a href="/posts">Go Back</a>
+<div class="story-main">
     <h1>{{$post->title}}</h1>
-    </div>
-            <img style="width: 75%" src="public/storage/cover_images/{{$post->cover_image}}">
-            <div>
-    
-    <div>
+   
+    <img src="/storage/images/cover_images/{{$post->cover_image}}">
+
+        <p>
         {!!$post->body!!}
-    </div>
+        </p>
+
     <hr>
     <small>Dropped on {{$post-> created_at}}</small>
     <hr>
+    <div class="post-options">
+    <a href="/posts">Go Back</a>
+    <div class="socials">
+        <a class="twitter"
+            href="https://twitter.com/intent/tweet?text=dissidentai.com/posts/{{$post->id}}"><i class="fab fa-twitter"></i></a>
+    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+    <script type="IN/Share" data-url="dissidentai.com/posts/{{$post->id}}"></script>
+    </div>
     @if(!Auth::guest())
     @if(Auth::user()->id == $post->user_id)
     <a href="/posts/{{$post->id}}/edit">Edit</a>
@@ -23,4 +31,6 @@
     {!!Form::close()!!}
     @endif 
     @endif 
+    </div>
+</div>
     @endsection

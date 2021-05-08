@@ -1,74 +1,70 @@
 
 
-  <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon">Hi</span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li>hello</li>
-                        <li>howdy</li>
-                    </ul>
-
-                    <ul >
-        <li>
-          <a  href="/about">About</a>
-        </li>
-        <li>
-            <a  href="/services">Services</a>
-          </li>
-          <li>
-            <a  href="/posts">Stories</a>
-          </li>
-        </ul>
-        <ul>
-          <li><a href="/posts/create">Add an Entry</a></li>
-        </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
+  <nav class="navbar">
+     <div class="site-title">
+        <a href="{{ url('/') }}"><i class="fas fa-link"></i>
+            DISSIDENT AI
+        </a>
+     </div>
+     <a href="#" class="toggle">
+         <span class="bar"></span>
+         <span class="bar"></span>
+         <span class="bar"></span>
+     </a>
+     <div class="navlinks">
+    <ul>
+        <li><a  href="/about">ABOUT</a></li>
+        <li><a  href="/posts">STORIES</a></li>
+        <li><a href="/posts/create">ADD UNIQUE STORY</a></li>
+    </ul>
+    </div>
+<div class="">
+    <div class="loglinks">
+    <ul class="">
+                <!-- Authentication Links -->
                         @guest
+                        
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <li class="">
+                                    <a class="" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <li class="">
+                                    <a class="pink-btn" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
+    </div>
                         @else
                         <li>
-                        <a href="/home">Dashboard</a>
+                        <a class="purple" href="/home">Dashboard: {{ Auth::user()->name }} </a>
                         </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                            <li class="">
+                                    <a class="yellow" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __(' Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                </div>
                             </li>
                         @endguest
                     </ul>
                 </div>
-            </div>
+      
+        </nav>
+        <nav class="navbar under">
+    
+            
+            <div class="">
+           <ul>
+           <li class="resources"><a  href="/news"> Resources <i class="far fa-newspaper"></i></a>
+           </li>
+               <li class="under-menu-item"><a  href="/news">News</a></li>
+               <li class="under-menu-item"><a  href="/blogs">Blogs</a></li>
+               <li class="under-menu-item"><a href="/communities">Communities</a></li>
+           </ul>
+           </div>
         </nav>
