@@ -33,22 +33,17 @@ return [
     |
     */
 
-    $url = "mysql://bfcf6563788846:d308efce@us-cdbr-east-04.cleardb.com/heroku_887d80d0c335601?reconnect=true";
-
-    $host = "us-cdbr-east-04.cleardb.com:3306";
-    $username = "bfcf6563788846";
-    $password = "d308efce";
-    $database = "heroku_887d80d0c335601?reconnect=true";
+    
     
 
     'connections' => [
 
         'heroku_conn' => array(
             'driver' => 'mysql',
-            'host' => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
+            'host' => 'eu-cdbr-west-01.cleardb.com',
+            'database' => 'heroku_78228f7c75a06d5',
+            'username' => 'b3fffe5008c3c2',
+            'password' => '2b670a96',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
