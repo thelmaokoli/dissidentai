@@ -2,12 +2,6 @@
 
 use Illuminate\Support\Str;
 
-$url = parse_url(getenv("mysql://bfcf6563788846:d308efce@us-cdbr-east-04.cleardb.com/heroku_887d80d0c335601?reconnect=true"));
-
-$host = $url["us-cdbr-east-04.cleardb.com"];
-$username = $url["bfcf6563788846"];
-$password = $url["d308efce"];
-$database = substr($url["heroku_887d80d0c335601"], 1);
 
 return [
 
@@ -22,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'heroku_conn'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,16 +39,7 @@ return [
 
     'connections' => [
 
-        'heroku_conn' => array(
-            'driver' => 'mysql',
-            'host' => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-        ),
+   
 
         'sqlite' => [
             'driver' => 'sqlite',
@@ -64,7 +49,7 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-       /* 'mysql' => [
+       'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -82,7 +67,7 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
-        ], */
+        ], 
 
         'pgsql' => [
             'driver' => 'pgsql',
