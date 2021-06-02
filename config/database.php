@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'heroku_conn'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,26 @@ return [
     |
     */
 
+    $url = parse_url(getenv("mysql://bfcf6563788846:d308efce@us-cdbr-east-04.cleardb.com/heroku_887d80d0c335601?reconnect=true"));
+
+    $host = $url["us-cdbr-east-04.cleardb.com:3306"];
+    $username = $url["bfcf6563788846"];
+    $password = $url["d308efce"];
+    $database = substr($url["path"], 1);
+    
+
     'connections' => [
+
+        'heroku_conn' => array(
+            'driver' => 'mysql',
+            'host' => $host,
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ),
 
         'sqlite' => [
             'driver' => 'sqlite',
