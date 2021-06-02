@@ -4,7 +4,7 @@ use Illuminate\Support\Str;
 
 $url = parse_url(getenv("mysql://bfcf6563788846:d308efce@us-cdbr-east-04.cleardb.com/heroku_887d80d0c335601?reconnect=true"));
 
-$host = $url["us-cdbr-east-04.cleardb.com"];
+$host = $url["us-cdbr-east-04.cleardb.com:3306"];
 $username = $url["bfcf6563788846"];
 $password = $url["d308efce"];
 $database = substr($url["heroku_887d80d0c335601"], 1);
