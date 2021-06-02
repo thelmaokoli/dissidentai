@@ -33,12 +33,12 @@ return [
     |
     */
 
-    $url = parse_url(getenv("mysql://bfcf6563788846:d308efce@us-cdbr-east-04.cleardb.com/heroku_887d80d0c335601?reconnect=true"));
+    $url = "mysql://bfcf6563788846:d308efce@us-cdbr-east-04.cleardb.com/heroku_887d80d0c335601?reconnect=true";
 
-    $host = $url["us-cdbr-east-04.cleardb.com:3306"];
-    $username = $url["bfcf6563788846"];
-    $password = $url["d308efce"];
-    $database = substr($url["path"], 1);
+    $host = "us-cdbr-east-04.cleardb.com:3306";
+    $username = "bfcf6563788846";
+    $password = "d308efce";
+    $database = "heroku_887d80d0c335601?reconnect=true";
     
 
     'connections' => [
