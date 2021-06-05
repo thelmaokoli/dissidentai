@@ -147,9 +147,7 @@ html{
      list-style: none;
  }
 
- @media (max-width: 600px) {
-   
- }
+
 
 .story{
      width: 20rem;
@@ -178,7 +176,17 @@ html{
 }
 
 
+@media (max-width: 600px) {
+     .story-main{
+          width: 80%;
+     }
+}
 
+@media (min-width: 600px) {
+     .story-main{
+          width: 65%;
+     }
+}
 .story-main{
      margin: auto;
      width: 65%;
@@ -208,6 +216,8 @@ html{
 .story-main a{
      color: rgb(74, 221, 131);
 }
+
+
 
 .post-options{
      display: flex;
@@ -362,7 +372,7 @@ Nav
 .resources{
     -webkit-padding-end: 1rem;
             padding-inline-end: 1rem;
-}
+} 
 
 .long-title{
      width: 75%;
