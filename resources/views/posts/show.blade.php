@@ -16,7 +16,7 @@
     <a href="/posts">Go Back</a>
     <div class="socials">
         <a class="twitter"
-            href="https://twitter.com/intent/tweet?text=dissidentai.com/posts/{{$post->id}}"><i class="fab fa-twitter"></i></a>
+            href="https://twitter.com/intent/tweet?text=dissidentai.herokuapp.com/posts/{{$post->id}}"><i class="fab fa-twitter"></i></a>
     <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
     <script type="IN/Share" data-url="dissidentai.com/posts/{{$post->id}}"></script>
     </div>
