@@ -18,7 +18,7 @@
         <a class="twitter"
             href="https://twitter.com/intent/tweet?text=dissidentai.herokuapp.com/posts/{{$post->id}}"><i class="fab fa-twitter"></i></a>
     <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
-    <script type="IN/Share" data-url="dissidentai.com/posts/{{$post->id}}"></script>
+    <script type="IN/Share" data-url="dissidentai.herokuapp.com/posts/{{$post->id}}"></script>
     </div>
     @if(!Auth::guest())
     @if(Auth::user()->id == $post->user_id)
